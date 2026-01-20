@@ -19,6 +19,10 @@ class SettingsScreen extends StatelessWidget {
           // User Info
           Obx(() {
             final user = authController.user;
+            final displayName =
+                user?.userMetadata?['display_name'] as String? ?? 'User';
+            final email = user?.email ?? '';
+
             return Container(
               padding: const EdgeInsets.all(AppTheme.spacingL),
               color: AppTheme.primaryColor.withOpacity(0.1),
@@ -28,7 +32,7 @@ class SettingsScreen extends StatelessWidget {
                     radius: 32,
                     backgroundColor: AppTheme.primaryColor,
                     child: Text(
-                      user?.displayName?.substring(0, 1).toUpperCase() ?? 'U',
+                      displayName.substring(0, 1).toUpperCase(),
                       style: const TextStyle(
                         fontSize: 32,
                         color: Colors.white,
@@ -42,14 +46,15 @@ class SettingsScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          user?.displayName ?? 'User',
+                          displayName,
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                         Text(
-                          user?.email ?? '',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: AppTheme.textSecondaryColor,
-                              ),
+                          email,
+                          style:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    color: AppTheme.textSecondaryColor,
+                                  ),
                         ),
                       ],
                     ),
@@ -58,9 +63,9 @@ class SettingsScreen extends StatelessWidget {
               ),
             );
           }),
-          
+
           const SizedBox(height: AppTheme.spacingM),
-          
+
           // Settings Items
           _buildSettingsItem(
             context,
@@ -71,17 +76,17 @@ class SettingsScreen extends StatelessWidget {
               // TODO: Navigate to profile edit
             },
           ),
-          
+
           _buildSettingsItem(
             context,
-            icon: Icons.notifications_outline,
+            icon: Icons.notifications_outlined,
             title: 'Notifikasi',
             subtitle: 'Pengaturan notifikasi',
             onTap: () {
               // TODO: Navigate to notification settings
             },
           ),
-          
+
           _buildSettingsItem(
             context,
             icon: Icons.backup_outlined,
@@ -91,7 +96,7 @@ class SettingsScreen extends StatelessWidget {
               // TODO: Navigate to backup settings
             },
           ),
-          
+
           _buildSettingsItem(
             context,
             icon: Icons.help_outline,
@@ -101,7 +106,7 @@ class SettingsScreen extends StatelessWidget {
               // TODO: Navigate to help
             },
           ),
-          
+
           _buildSettingsItem(
             context,
             icon: Icons.info_outline,
@@ -111,9 +116,9 @@ class SettingsScreen extends StatelessWidget {
               _showAboutDialog(context);
             },
           ),
-          
+
           const Divider(height: 32),
-          
+
           // Logout
           _buildSettingsItem(
             context,
@@ -169,7 +174,7 @@ class SettingsScreen extends StatelessWidget {
       ),
       children: [
         const Text(
-          'Aplikasi kasir mobile dengan Firebase untuk manajemen penjualan, produk, dan laporan bisnis.',
+          'Aplikasi kasir mobile dengan Supabase untuk manajemen penjualan, produk, dan laporan bisnis.',
         ),
       ],
     );

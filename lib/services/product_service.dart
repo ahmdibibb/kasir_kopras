@@ -27,11 +27,8 @@ class ProductService extends GetxService {
   // Get single product
   Future<Product?> getProduct(String productId) async {
     try {
-      final data = await supabase
-          .from('products')
-          .select()
-          .eq('id', productId)
-          .single();
+      final data =
+          await supabase.from('products').select().eq('id', productId).single();
 
       return Product.fromSupabase(data);
     } catch (e) {
@@ -69,11 +66,8 @@ class ProductService extends GetxService {
         'user_id': userId,
       };
 
-      final response = await supabase
-          .from('products')
-          .insert(productData)
-          .select()
-          .single();
+      final response =
+          await supabase.from('products').insert(productData).select().single();
 
       return response['id'] as String;
     } catch (e) {
@@ -113,10 +107,7 @@ class ProductService extends GetxService {
         'image_url': imageUrl,
       };
 
-      await supabase
-          .from('products')
-          .update(updateData)
-          .eq('id', productId);
+      await supabase.from('products').update(updateData).eq('id', productId);
     } catch (e) {
       throw Exception('Gagal update produk: ${e.toString()}');
     }
@@ -131,10 +122,7 @@ class ProductService extends GetxService {
       }
 
       // Delete product
-      await supabase
-          .from('products')
-          .delete()
-          .eq('id', productId);
+      await supabase.from('products').delete().eq('id', productId);
     } catch (e) {
       throw Exception('Gagal menghapus produk: ${e.toString()}');
     }
@@ -145,8 +133,7 @@ class ProductService extends GetxService {
     try {
       await supabase
           .from('products')
-          .update({'stock': newStock})
-          .eq('id', productId);
+          .update({'stock': newStock}).eq('id', productId);
     } catch (e) {
       throw Exception('Gagal update stok: ${e.toString()}');
     }
@@ -178,11 +165,17 @@ class ProductService extends GetxService {
     return supabase
         .from('products')
         .stream(primaryKey: ['id'])
-        .eq('user_id', userId)
-        .eq('category', category)
         .order('created_at', ascending: false)
         .map((data) {
-          return data.map((item) => Product.fromSupabase(item)).toList();
+          return data
+              .where((item) {
+                final currentUserId = _authService.currentUserId;
+                if (currentUserId == null) return false;
+                return item['user_id'] == currentUserId &&
+                    item['category'] == category;
+              })
+              .map((item) => Product.fromSupabase(item))
+              .toList();
         });
   }
 
@@ -194,10 +187,17 @@ class ProductService extends GetxService {
     return supabase
         .from('products')
         .stream(primaryKey: ['id'])
-        .eq('user_id', userId)
-        .lte('stock', AppConstants.lowStockThreshold)
+        .order('created_at', ascending: false)
         .map((data) {
-          return data.map((item) => Product.fromSupabase(item)).toList();
+          return data
+              .where((item) {
+                final currentUserId = _authService.currentUserId;
+                if (currentUserId == null) return false;
+                return item['user_id'] == currentUserId &&
+                    (item['stock'] ?? 0) <= AppConstants.lowStockThreshold;
+              })
+              .map((item) => Product.fromSupabase(item))
+              .toList();
         });
   }
 
@@ -208,13 +208,10 @@ class ProductService extends GetxService {
       final fileName = '${DateTime.now().millisecondsSinceEpoch}.jpg';
       final filePath = '$userId/$fileName';
 
-      await supabase.storage
-          .from('product-images')
-          .upload(filePath, imageFile);
+      await supabase.storage.from('product-images').upload(filePath, imageFile);
 
-      final publicUrl = supabase.storage
-          .from('product-images')
-          .getPublicUrl(filePath);
+      final publicUrl =
+          supabase.storage.from('product-images').getPublicUrl(filePath);
 
       return publicUrl;
     } catch (e) {
@@ -228,16 +225,14 @@ class ProductService extends GetxService {
       // Extract file path from URL
       final uri = Uri.parse(imageUrl);
       final pathSegments = uri.pathSegments;
-      
+
       // Find 'product-images' index and get path after it
       final bucketIndex = pathSegments.indexOf('product-images');
       if (bucketIndex == -1) return;
-      
+
       final filePath = pathSegments.sublist(bucketIndex + 1).join('/');
 
-      await supabase.storage
-          .from('product-images')
-          .remove([filePath]);
+      await supabase.storage.from('product-images').remove([filePath]);
     } catch (e) {
       // Ignore error if image doesn't exist
       print('Error deleting image: $e');

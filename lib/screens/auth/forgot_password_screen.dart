@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/auth_controller.dart';
-import '../theme/app_theme.dart';
+import '../../controllers/auth_controller.dart';
+import '../../theme/app_theme.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -53,14 +53,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   color: AppTheme.primaryColor,
                 ),
                 const SizedBox(height: AppTheme.spacingM),
-                
                 Text(
                   'Reset Password',
                   style: Theme.of(context).textTheme.headlineMedium,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: AppTheme.spacingS),
-                
                 Text(
                   'Masukkan email Anda untuk menerima link reset password',
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -69,7 +67,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: AppTheme.spacingXL),
-                
                 TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
@@ -88,7 +85,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   },
                 ),
                 const SizedBox(height: AppTheme.spacingXL),
-                
                 Obx(() => ElevatedButton(
                       onPressed: _authController.isLoading.value
                           ? null

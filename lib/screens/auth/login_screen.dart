@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/auth_controller.dart';
-import '../theme/app_theme.dart';
+import '../../controllers/auth_controller.dart';
+import '../../theme/app_theme.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -15,7 +15,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _authController = Get.find<AuthController>();
-  
+
   bool _obscurePassword = true;
 
   @override
@@ -58,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: AppTheme.primaryColor,
                   ),
                   const SizedBox(height: AppTheme.spacingM),
-                  
+
                   // Title
                   Text(
                     'Kasir Kopras',
@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: AppTheme.spacingS),
-                  
+
                   Text(
                     'Masuk ke akun Anda',
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -75,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: AppTheme.spacingXL),
-                  
+
                   // Email Field
                   TextFormField(
                     controller: _emailController,
@@ -95,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                   const SizedBox(height: AppTheme.spacingM),
-                  
+
                   // Password Field
                   TextFormField(
                     controller: _passwordController,
@@ -127,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                   const SizedBox(height: AppTheme.spacingS),
-                  
+
                   // Forgot Password
                   Align(
                     alignment: Alignment.centerRight,
@@ -139,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const SizedBox(height: AppTheme.spacingL),
-                  
+
                   // Login Button
                   Obx(() => ElevatedButton(
                         onPressed: _authController.isLoading.value
@@ -157,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             : const Text('Masuk'),
                       )),
                   const SizedBox(height: AppTheme.spacingL),
-                  
+
                   // Register Link
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

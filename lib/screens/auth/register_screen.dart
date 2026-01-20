@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/auth_controller.dart';
-import '../theme/app_theme.dart';
+import '../../controllers/auth_controller.dart';
+import '../../theme/app_theme.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -17,7 +17,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _authController = Get.find<AuthController>();
-  
+
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
 
@@ -65,14 +65,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   color: AppTheme.primaryColor,
                 ),
                 const SizedBox(height: AppTheme.spacingM),
-                
+
                 Text(
                   'Buat akun baru',
                   style: Theme.of(context).textTheme.headlineMedium,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: AppTheme.spacingS),
-                
+
                 Text(
                   'Isi data di bawah untuk mendaftar',
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -81,7 +81,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: AppTheme.spacingXL),
-                
+
                 // Name Field
                 TextFormField(
                   controller: _nameController,
@@ -101,7 +101,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                 ),
                 const SizedBox(height: AppTheme.spacingM),
-                
+
                 // Email Field
                 TextFormField(
                   controller: _emailController,
@@ -121,7 +121,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                 ),
                 const SizedBox(height: AppTheme.spacingM),
-                
+
                 // Password Field
                 TextFormField(
                   controller: _passwordController,
@@ -153,7 +153,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                 ),
                 const SizedBox(height: AppTheme.spacingM),
-                
+
                 // Confirm Password Field
                 TextFormField(
                   controller: _confirmPasswordController,
@@ -185,7 +185,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                 ),
                 const SizedBox(height: AppTheme.spacingXL),
-                
+
                 // Register Button
                 Obx(() => ElevatedButton(
                       onPressed: _authController.isLoading.value
@@ -203,7 +203,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           : const Text('Daftar'),
                     )),
                 const SizedBox(height: AppTheme.spacingL),
-                
+
                 // Login Link
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
