@@ -1,35 +1,33 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  // Dark Theme Colors (Modern POS Style)
-  static const Color darkBackground =
-      Color(0xFF121212); // Dark grey, not pure black
-  static const Color darkSurface = Color(0xFF1E1E1E); // Elevated surface
-  static const Color darkSurfaceVariant = Color(0xFF2C2C2C); // Higher elevation
-  static const Color darkCard = Color(0xFF252525); // Card background
+  // Modern Blue-Grey Theme (Softer than pure black)
+  static const Color darkBackground = Color(0xFF1A1F2E); // Deep blue-grey
+  static const Color darkSurface = Color(0xFF252B3B); // Elevated surface
+  static const Color darkSurfaceVariant = Color(0xFF2F3647); // Higher elevation
+  static const Color darkCard = Color(0xFF2A3142); // Card background
 
-  // Primary Colors - Desaturated for dark mode
-  static const Color primaryColor = Color(0xFF6C63FF); // Purple accent
-  static const Color primaryLight = Color(0xFF8B84FF);
-  static const Color primaryDark = Color(0xFF5449E0);
+  // Primary Colors - Vibrant but not too bright
+  static const Color primaryColor = Color(0xFF5B8DEF); // Bright blue
+  static const Color primaryLight = Color(0xFF7BA5F3);
+  static const Color primaryDark = Color(0xFF4A7DD9);
 
-  // Accent Colors - Minimal and desaturated
-  static const Color accentOrange = Color(0xFFFF8A65); // Softer orange
-  static const Color accentGreen = Color(0xFF66BB6A); // Softer green
-  static const Color accentBlue = Color(0xFF42A5F5); // Softer blue
+  // Accent Colors - Warm and inviting
+  static const Color accentOrange = Color(0xFFFF9066); // Warm orange
+  static const Color accentGreen = Color(0xFF5FD68A); // Fresh green
+  static const Color accentBlue = Color(0xFF4FC3F7); // Bright blue
 
   // Status Colors
-  static const Color errorColor = Color(0xFFEF5350);
-  static const Color successColor = Color(0xFF66BB6A);
-  static const Color warningColor = Color(0xFFFFB74D);
-  static const Color infoColor = Color(0xFF42A5F5);
+  static const Color errorColor = Color(0xFFFF6B6B);
+  static const Color successColor = Color(0xFF5FD68A);
+  static const Color warningColor = Color(0xFFFFB84D);
+  static const Color infoColor = Color(0xFF4FC3F7);
 
-  // Text Colors - High contrast
-  static const Color textPrimary =
-      Color(0xFFE0E0E0); // Off-white for less strain
-  static const Color textSecondary = Color(0xFFB0B0B0); // Grey text
-  static const Color textHint = Color(0xFF757575); // Hint text
-  static const Color textDisabled = Color(0xFF4A4A4A);
+  // Text Colors - Clear and readable
+  static const Color textPrimary = Color(0xFFF0F2F5); // Almost white
+  static const Color textSecondary = Color(0xFFB8BCC8); // Light grey
+  static const Color textHint = Color(0xFF7A7F8E); // Medium grey
+  static const Color textDisabled = Color(0xFF4E5463);
 
   // Legacy light theme colors (for compatibility)
   static const Color secondaryColor = Color(0xFF00D4AA);

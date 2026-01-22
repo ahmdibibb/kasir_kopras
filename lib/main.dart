@@ -10,18 +10,18 @@ import 'controllers/product_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // Initialize Supabase
   await SupabaseConfig.initialize();
-  
+
   // Initialize Services
   Get.put(AuthService());
   Get.put(ProductService());
   Get.put(TransactionService());
-  
+
   // Initialize Controllers
   Get.put(AuthController());
   Get.put(ProductController());
-  
+
   runApp(const MyApp());
 }
