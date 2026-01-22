@@ -1,6 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:get/get.dart';
 import 'dart:io';
+import 'dart:typed_data';
 import '../models/product.dart';
 import '../utils/constants.dart';
 import '../supabase_config.dart';
@@ -44,6 +45,7 @@ class ProductService extends GetxService {
     required int stock,
     String? description,
     File? imageFile,
+    Uint8List? webImage,
   }) async {
     try {
       final userId = _authService.currentUserId;
@@ -53,7 +55,9 @@ class ProductService extends GetxService {
 
       // Upload image if provided
       if (imageFile != null) {
-        imageUrl = await _uploadImage(imageFile);
+        imageUrl = await _uploadImage(imageFile: imageFile);
+      } else if (webImage != null) {
+        imageUrl = await _uploadImage(webImage: webImage);
       }
 
       final productData = {
@@ -95,7 +99,7 @@ class ProductService extends GetxService {
         if (existingImageUrl != null) {
           await _deleteImage(existingImageUrl);
         }
-        imageUrl = await _uploadImage(imageFile);
+        imageUrl = await _uploadImage(imageFile: imageFile);
       }
 
       final updateData = {
@@ -202,13 +206,25 @@ class ProductService extends GetxService {
   }
 
   // Upload image to Supabase Storage
-  Future<String> _uploadImage(File imageFile) async {
+  Future<String> _uploadImage({File? imageFile, Uint8List? webImage}) async {
     try {
       final userId = _authService.currentUserId;
       final fileName = '${DateTime.now().millisecondsSinceEpoch}.jpg';
       final filePath = '$userId/$fileName';
 
-      await supabase.storage.from('product-images').upload(filePath, imageFile);
+      if (imageFile != null) {
+        // Mobile: upload File
+        await supabase.storage
+            .from('product-images')
+            .upload(filePath, imageFile);
+      } else if (webImage != null) {
+        // Web: upload Uint8List
+        await supabase.storage
+            .from('product-images')
+            .uploadBinary(filePath, webImage);
+      } else {
+        throw Exception('No image provided');
+      }
 
       final publicUrl =
           supabase.storage.from('product-images').getPublicUrl(filePath);

@@ -55,23 +55,23 @@ class _ProductListScreenState extends State<ProductListScreen> {
                   },
                 ),
               ),
-              
+
               // Category Filter
-              Obx(() => SizedBox(
-                    height: 40,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppTheme.spacingM,
-                      ),
-                      children: [
-                        _buildCategoryChip('Semua'),
-                        ...AppConstants.defaultCategories.map(
-                          (category) => _buildCategoryChip(category),
-                        ),
-                      ],
+              SizedBox(
+                height: 40,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppTheme.spacingM,
+                  ),
+                  children: [
+                    _buildCategoryChip('Semua'),
+                    ...AppConstants.defaultCategories.map(
+                      (category) => _buildCategoryChip(category),
                     ),
-                  )),
+                  ],
+                ),
+              ),
               const SizedBox(height: AppTheme.spacingM),
             ],
           ),
@@ -172,7 +172,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     )
                   : _buildPlaceholderImage(),
             ),
-            
+
             Padding(
               padding: const EdgeInsets.all(AppTheme.spacingS),
               child: Column(
@@ -186,7 +186,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: AppTheme.spacingXS),
-                  
+
                   // Price
                   Text(
                     Formatters.currency(product.price),
@@ -196,7 +196,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                         ),
                   ),
                   const SizedBox(height: AppTheme.spacingXS),
-                  
+
                   // Stock
                   Row(
                     children: [

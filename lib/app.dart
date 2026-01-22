@@ -17,8 +17,10 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Kasir Kopras',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      
+      theme: AppTheme.darkTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.dark,
+
       // Initial Route based on auth state
       home: Obx(() {
         if (authController.isAuthenticated) {
@@ -27,12 +29,13 @@ class MyApp extends StatelessWidget {
           return const LoginScreen();
         }
       }),
-      
+
       // Routes
       getPages: [
         GetPage(name: '/login', page: () => const LoginScreen()),
         GetPage(name: '/register', page: () => const RegisterScreen()),
-        GetPage(name: '/forgot-password', page: () => const ForgotPasswordScreen()),
+        GetPage(
+            name: '/forgot-password', page: () => const ForgotPasswordScreen()),
         GetPage(name: '/home', page: () => const HomeScreen()),
       ],
     );

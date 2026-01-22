@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'dart:typed_data';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -24,9 +26,10 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
   final _stockController = TextEditingController();
   final _descriptionController = TextEditingController();
   final ProductController _productController = Get.find<ProductController>();
-  
+
   String _selectedCategory = AppConstants.defaultCategories[0];
   File? _imageFile;
+  Uint8List? _webImage;
   final ImagePicker _picker = ImagePicker();
 
   bool get isEditing => widget.product != null;
@@ -61,9 +64,18 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
     );
 
     if (image != null) {
-      setState(() {
-        _imageFile = File(image.path);
-      });
+      if (kIsWeb) {
+        // For web, read as bytes
+        final bytes = await image.readAsBytes();
+        setState(() {
+          _webImage = bytes;
+        });
+      } else {
+        // For mobile, use File
+        setState(() {
+          _imageFile = File(image.path);
+        });
+      }
     }
   }
 
@@ -94,6 +106,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
           stock: stock,
           description: description.isEmpty ? null : description,
           imageFile: _imageFile,
+          webImage: _webImage,
         );
       }
 
@@ -164,13 +177,18 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
                   borderRadius: BorderRadius.circular(AppTheme.radiusM),
                   border: Border.all(color: AppTheme.textHintColor),
                 ),
-                child: _imageFile != null
+                child: _imageFile != null || _webImage != null
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(AppTheme.radiusM),
-                        child: Image.file(
-                          _imageFile!,
-                          fit: BoxFit.cover,
-                        ),
+                        child: kIsWeb && _webImage != null
+                            ? Image.memory(
+                                _webImage!,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.file(
+                                _imageFile!,
+                                fit: BoxFit.cover,
+                              ),
                       )
                     : (isEditing && widget.product!.imageUrl != null)
                         ? ClipRRect(
@@ -299,9 +317,8 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
 
             // Submit Button
             Obx(() => ElevatedButton(
-                  onPressed: _productController.isLoading.value
-                      ? null
-                      : _handleSubmit,
+                  onPressed:
+                      _productController.isLoading.value ? null : _handleSubmit,
                   child: _productController.isLoading.value
                       ? const SizedBox(
                           height: 20,

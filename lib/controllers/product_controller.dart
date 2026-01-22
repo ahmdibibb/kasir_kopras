@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'dart:io';
+import 'dart:typed_data';
 import '../models/product.dart';
 import '../services/product_service.dart';
 
@@ -64,6 +65,7 @@ class ProductController extends GetxController {
     required int stock,
     String? description,
     File? imageFile,
+    Uint8List? webImage,
   }) async {
     try {
       isLoading.value = true;
@@ -75,6 +77,7 @@ class ProductController extends GetxController {
         stock: stock,
         description: description,
         imageFile: imageFile,
+        webImage: webImage,
       );
 
       Get.snackbar(

@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart_outlined),
             activeIcon: Icon(Icons.shopping_cart),
-            label: 'Penjualan',
+            label: 'Kasir',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.bar_chart_outlined),

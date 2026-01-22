@@ -39,7 +39,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
 
       if (success && mounted) {
-        Get.offAllNamed('/home');
+        // Cek apakah user sudah terautentikasi (dapat session)
+        if (_authController.isAuthenticated) {
+          Get.offAllNamed('/home');
+        } else {
+          // Jika tidak, berarti butuh verifikasi email
+          Get.defaultDialog(
+            title: 'Verifikasi Email',
+            middleText:
+                'Link verifikasi telah dikirim ke email Anda. Silakan cek inbox/spam dan verifikasi akun untuk login.',
+            textConfirm: 'Ke Login',
+            confirmTextColor: Colors.white,
+            onConfirm: () {
+              Get.back(); // Close dialog
+              Get.back(); // Back to Login
+            },
+            barrierDismissible: false,
+          );
+        }
       }
     }
   }

@@ -7,6 +7,7 @@ import '../../services/transaction_service.dart';
 import '../../services/product_service.dart';
 import '../../models/transaction.dart';
 import '../../models/product.dart';
+import '../../widgets/common_widgets.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -45,15 +46,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
               // Sales Summary Cards
               _buildSalesSummary(),
               const SizedBox(height: AppTheme.spacingL),
-              
+
               // Sales Chart
               _buildSalesChart(),
               const SizedBox(height: AppTheme.spacingL),
-              
+
               // Low Stock Alert
               _buildLowStockAlert(),
               const SizedBox(height: AppTheme.spacingL),
-              
+
               // Recent Transactions
               _buildRecentTransactions(),
             ],
@@ -200,8 +201,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           sideTitles: SideTitles(
                             showTitles: true,
                             getTitlesWidget: (value, meta) {
-                              const days = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
-                              if (value.toInt() >= 0 && value.toInt() < days.length) {
+                              const days = [
+                                'Sen',
+                                'Sel',
+                                'Rab',
+                                'Kam',
+                                'Jum',
+                                'Sab',
+                                'Min'
+                              ];
+                              if (value.toInt() >= 0 &&
+                                  value.toInt() < days.length) {
                                 return Text(
                                   days[value.toInt()],
                                   style: const TextStyle(fontSize: 10),
@@ -345,9 +355,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         const SizedBox(height: AppTheme.spacingS),
                         Text(
                           'Belum ada transaksi hari ini',
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                color: AppTheme.textSecondaryColor,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: AppTheme.textSecondaryColor,
+                                  ),
                         ),
                       ],
                     ),
@@ -397,7 +408,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Future<Map<String, double>> _getSalesSummary() async {
     final now = DateTime.now();
-    
+
     // Today
     final startOfDay = DateTime(now.year, now.month, now.day);
     final endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59);
